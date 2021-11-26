@@ -6,7 +6,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Lifetrakr</title>
+    <title>{{ config('app.name') }}</title>
 
     <!-- PLUGINS CSS STYLE -->
     <!-- Bootstrap -->
@@ -22,7 +22,7 @@
     <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet">
 
     <!-- FAVICON -->
-    <link href="{{ asset('assets/images/favicon.png') }}" rel="shortcut icon">
+    <link href="{{ asset('assets/images/favicon.ico') }}" rel="shortcut icon">
 
 </head>
 
@@ -31,7 +31,7 @@
 
 <nav class="navbar main-nav fixed-top navbar-expand-lg large">
     <div class="container">
-        <a class="navbar-brand" href="homepage.html"><img src="{{ asset('assets/images/logo.png') }}" alt="logo"></a>
+        <a class="navbar-brand" href="/"><img src="{{ asset('assets/images/logo.png') }}" alt="logo"></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="ti-menu text-white"></span>
         </button>
@@ -463,7 +463,7 @@
         <div class="row">
             <div class="col-lg-6 mr-auto">
                 <div class="footer-logo">
-                    <img src="images/logo.png" alt="footer-logo">
+                    <img src="{{ asset('assets/images/logo.png') }}" alt="{{ config('app.name') }}">
                 </div>
                 <div class="copyright">
                     <p>@2019 Themefisher All Rights Reserved | Design and Developed By : <a href="https://themefisher.com/"
