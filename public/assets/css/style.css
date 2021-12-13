@@ -47,7 +47,6 @@ p, li, blockquote, label {
 p {
   line-height: 27px;
 }
-
 .lead {
   font-size: 1.5rem;
   line-height: 1.5;
@@ -2299,4 +2298,7 @@ a:hover {
   width: 100%;
 }
 
+.top-padding {
+    padding-top: 180px;
+}
 /*# sourceMappingURL=maps/style.css.map */

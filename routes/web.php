@@ -17,3 +17,6 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [FrontController::class, 'index'])->name('home');
 
 require __DIR__.'/auth.php';
+
+// Catch all page controller (place at the very bottom)
+Route::get('{slug}', [FrontController::class, 'page'])->where('slug', '([A-Za-z0-9\-\/]+)');
