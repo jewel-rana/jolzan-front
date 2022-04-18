@@ -1,126 +1,184 @@
 (function ($) {
-    'use strict';
 
-    $(document).on('ready', function () {
-        // -----------------------------
-        //  On Scroll Resize Nav
-        // -----------------------------
-        $(window).scroll(function () {
-            if ($('.main-nav').offset().top > 100) {
-                $('.main-nav').removeClass('large');
-            } else {
-                $('.main-nav').addClass('large');
-            }
-        });
-        // -----------------------------
-        //  On Click Smooth scrool
-        // -----------------------------
-        // animation scroll js
-        var html_body = $('html, body');
-        $('.scrollTo').on('click', function () { //use scrollTo class in any HTML tag for scrolling
-            if (location.pathname.replace(/^\//, '') === this.pathname.replace(/^\//, '') && location.hostname === this.hostname) {
-                var target = $(this.hash);
-                target = target.length ? target : $('[name=' + this.hash.slice(1) + ']');
-                if (target.length) {
-                    html_body.animate({
-                        scrollTop: target.offset().top - 50
-                    }, 1500, 'easeInOutExpo');
-                    return false;
-                }
-            }
-        });
+	"use strict";
 
-        // easeInOutExpo Declaration
-        jQuery.extend(jQuery.easing, {
-            easeInOutExpo: function (x, t, b, c, d) {
-                if (t === 0) {
-                    return b;
-                }
-                if (t === d) {
-                    return b + c;
-                }
-                if ((t /= d / 2) < 1) {
-                    return c / 2 * Math.pow(2, 10 * (t - 1)) + b;
-                }
-                return c / 2 * (-Math.pow(2, -10 * --t) + 2) + b;
-            }
-        });
-        // -----------------------------
-        //  Testimonial Slider
-        // -----------------------------
-        $('.testimonial-slider').slick({
-            autoplay: false
-        });
-        // -----------------------------
-        //  Screenshot Slider
-        // -----------------------------
-        $('.screenshot-slider').slick({
-            dots: true,
-            slidesToShow: 3,
-            centerMode: true,
-            infinite: false,
-            responsive: [{
-                breakpoint: 768,
-                settings: {
-                    arrows: false
-                }
-            }]
-        });
-        // -----------------------------
-        //  Video Replace
-        // -----------------------------
-        $('.video-box span.icon').click(function () {
-            var video = '<iframe allowfullscreen src="' + $(this).attr('data-video') + '"></iframe>';
-            $(this).replaceWith(video);
-        });
-        // -----------------------------
-        //  Team Progress Bar
-        // -----------------------------
-        /* $('.team').waypoint(function () {
-            $('.progress').each(function () {
-                $(this).find('.progress-bar').animate({
-                    width: $(this).attr('data-percent')
-                });
-            });
-            this.destroy();
-        }, {
-            offset: 100
-        }); */
+	// Header Type = Fixed
+  $(window).scroll(function() {
+    var scroll = $(window).scrollTop();
+    var box = $('.header-text').height();
+    var header = $('header').height();
+
+    if (scroll >= box - header) {
+      $("header").addClass("background-header");
+    } else {
+      $("header").removeClass("background-header");
+    }
+  });
 
 
-        // -----------------------------
-        //  Count Up
-        // -----------------------------
-        function counter() {
-            var oTop;
-            if ($('.count').length !== 0) {
-                oTop = $('.count').offset().top - window.innerHeight;
-            }
-            if ($(window).scrollTop() > oTop) {
-                $('.count').each(function () {
-                    var $this = $(this),
-                        countTo = $this.attr('data-count');
-                    $({
-                        countNum: $this.text()
-                    }).animate({
-                        countNum: countTo
-                    }, {
-                        duration: 1000,
-                        easing: 'swing',
-                        step: function () {
-                            $this.text(Math.floor(this.countNum));
-                        },
-                        complete: function () {
-                            $this.text(this.countNum);
-                        }
-                    });
-                });
-            }
+	$('.loop').owlCarousel({
+      center: true,
+      items:1,
+      loop:true,
+      autoplay: true,
+      nav: true,
+      margin:0,
+      responsive:{
+          1200:{
+              items:5
+          },
+          992:{
+              items:3
+          },
+          760:{
+            items:2
         }
-        $(window).on('scroll', function () {
-            counter();
-        });
+      }
+  });
+
+  $("#modal_trigger").leanModal({
+		top: 100,
+		overlay: 0.6,
+		closeButton: ".modal_close"
+});
+
+$(function() {
+		// Calling Login Form
+		$("#login_form").click(function() {
+				$(".social_login").hide();
+				$(".user_login").show();
+				return false;
+		});
+
+		// Calling Register Form
+		$("#register_form").click(function() {
+				$(".social_login").hide();
+				$(".user_register").show();
+				$(".header_title").text('Register');
+				return false;
+		});
+
+		// Going back to Social Forms
+		$(".back_btn").click(function() {
+				$(".user_login").hide();
+				$(".user_register").hide();
+				$(".social_login").show();
+				$(".header_title").text('Login');
+				return false;
+		});
+});
+
+  // Acc
+  $(document).on("click", ".naccs .menu div", function() {
+    var numberIndex = $(this).index();
+
+    if (!$(this).is("active")) {
+        $(".naccs .menu div").removeClass("active");
+        $(".naccs ul li").removeClass("active");
+
+        $(this).addClass("active");
+        $(".naccs ul").find("li:eq(" + numberIndex + ")").addClass("active");
+
+        var listItemHeight = $(".naccs ul")
+          .find("li:eq(" + numberIndex + ")")
+          .innerHeight();
+        $(".naccs ul").height(listItemHeight + "px");
+      }
+  });
+
+
+	// Menu Dropdown Toggle
+  if($('.menu-trigger').length){
+    $(".menu-trigger").on('click', function() {
+      $(this).toggleClass('active');
+      $('.header-area .nav').slideToggle(200);
+    });
+  }
+
+
+  // Menu elevator animation
+  $('.scroll-to-section a[href*=\\#]:not([href=\\#])').on('click', function() {
+    if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'') && location.hostname == this.hostname) {
+      var target = $(this.hash);
+      target = target.length ? target : $('[name=' + this.hash.slice(1) +']');
+      if (target.length) {
+        var width = $(window).width();
+        if(width < 991) {
+          $('.menu-trigger').removeClass('active');
+          $('.header-area .nav').slideUp(200);
+        }
+        $('html,body').animate({
+          scrollTop: (target.offset().top) + 1
+        }, 700);
+        return false;
+      }
+    }
+  });
+
+  $(document).ready(function () {
+
+      //smoothscroll
+      $('.scroll-to-section a[href^="#"]').on('click', function (e) {
+          e.preventDefault();
+          $(document).off("scroll");
+
+          $('.scroll-to-section a').each(function () {
+              $(this).removeClass('active');
+          })
+          $(this).addClass('active');
+
+          var target = this.hash,
+          menu = target;
+          var target = $(this.hash);
+          $('html, body').stop().animate({
+              scrollTop: (target.offset().top) + 1
+          }, 500, 'swing', function () {
+              window.location.hash = target;
+              $(document).on("scroll", onScroll);
+          });
+      });
+  });
+
+  // Acc
+  $(document).on("click", ".naccs .menu div", function() {
+    var numberIndex = $(this).index();
+
+    if (!$(this).is("active")) {
+        $(".naccs .menu div").removeClass("active");
+        $(".naccs ul li").removeClass("active");
+
+        $(this).addClass("active");
+        $(".naccs ul").find("li:eq(" + numberIndex + ")").addClass("active");
+
+        var listItemHeight = $(".naccs ul")
+          .find("li:eq(" + numberIndex + ")")
+          .innerHeight();
+        $(".naccs ul").height(listItemHeight + "px");
+      }
+  });
+
+
+	// Page loading animation
+	 $(window).on('load', function() {
+
+        $('#js-preloader').addClass('loaded');
 
     });
 
-})(jQuery);
+
+
+	// Window Resize Mobile Menu Fix
+  function mobileNav() {
+    var width = $(window).width();
+    $('.submenu').on('click', function() {
+      if(width < 767) {
+        $('.submenu ul').removeClass('active');
+        $(this).find('ul').toggleClass('active');
+      }
+    });
+  }
+
+
+
+
+})(window.jQuery);
